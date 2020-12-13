@@ -1,0 +1,18 @@
+{
+  "name": "homebridge-telekom-iptv",
+  "version": "0.9.0",
+  "description": "Homebridge plugin to control the Set-top-box unit provided by Telekom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bálint Berente",
+  "license": "ISC",
+  "engines": {
+    "homebridge": ">=1.0.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "homebridge-plugin"
+  ]
+}
