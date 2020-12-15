@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require('fs');
+const path = require("path");
 const par = require("./parameters.json");
 var debug = false;
 
@@ -33,7 +34,8 @@ function createRequest(command) {
   var hash, binary;
   try {
     hash = par.hash[command];
-    binary = fs.readFileSync(`./binaries/${command}`);
+    var binaryPath = path.join(__dirname, 'binaries', command);
+    binary = fs.readFileSync(binaryPath);
   } catch (error) {
     console.log("Unable to make request for IPTV: " + error);
     return;
