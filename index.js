@@ -28,7 +28,7 @@ class IPTV {
     this.iptvAccessory = new api.platformAccessory(this.name, tv_uuid);
 
     // set the accessory category
-    this.iptvAccessory.category = this.api.hap.Categories.TELEVISION;
+    this.iptvAccessory.category = this.api.hap.Categories.TV_SET_TOP_BOX;
 
     // add the tv service
     const iptvService = this.iptvAccessory.addService(this.Service.Television);
