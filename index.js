@@ -14,32 +14,31 @@ class IPTV {
     this.api = api;
     this.Service = api.hap.Service;
     this.Characteristic = api.hap.Characteristic;
-    // this.debug = config.debug || false;
+    this.name = this.config.name || 'IPTV';
+    this.debug = config.debug || false;
+    this.serial = config.serial || "Unknown";
+    this.firmware = config.firmware || "1.0";
+    request.setDebug(this.debug);
     // get the name
-    const name = this.config.name || 'IPTV';
 
     // generate a UUID
-    const uuid = this.api.hap.uuid.generate('homebridge:telekom-iptv' + name);
+    const tv_uuid = this.api.hap.uuid.generate('homebridge:telekom-iptv' + this.name);
 
     // create the accessory
-    this.iptvAccessory = new api.platformAccessory(name, uuid);
+    this.iptvAccessory = new api.platformAccessory(this.name, tv_uuid);
 
     // set the accessory category
-    this.iptvAccessory.category = this.api.hap.Categories.TV_SET_TOP_BOX;
+    this.iptvAccessory.category = this.api.hap.Categories.TELEVISION;
 
     // add the tv service
     const iptvService = this.iptvAccessory.addService(this.Service.Television);
 
-    // add my own information service
-    let informationService = new this.Service.AccessoryInformation();
-    informationService
+    this.iptvAccessory.getService(this.Service.AccessoryInformation)
       .setCharacteristic(this.Characteristic.Name, 'Telekom IPTV')
-      .setCharacteristic(this.Characteristic.Manufacturer, 'Telekom')
-      .setCharacteristic(this.Characteristic.Model, "IPTV")
-    //   .setCharacteristic(this.Characteristic.SerialNumber, "Unknown")
-    //   .setCharacteristic(this.Characteristic.FirmwareRevision, "Unknown");
-
-    // this.iptvAccessory.addService(informationService);
+      .setCharacteristic(this.Characteristic.Manufacturer, 'Cisco')
+      .setCharacteristic(this.Characteristic.Model, "ISB2231MT")
+      .setCharacteristic(this.Characteristic.SerialNumber, this.serial)
+      .setCharacteristic(this.Characteristic.FirmwareRevision, this.firmware);
     
     // set sleep discovery characteristic
     iptvService.setCharacteristic(this.Characteristic.SleepDiscoveryMode, this.Characteristic.SleepDiscoveryMode.ALWAYS_DISCOVERABLE);
@@ -75,39 +74,39 @@ class IPTV {
             break;
           }
           case this.Characteristic.RemoteKey.ARROW_UP: {
-            request.createRequest("up");
+            request.createRequest(request.commands.UP);
             break;
           }
           case this.Characteristic.RemoteKey.ARROW_DOWN: {
-            request.createRequest("down");
+            request.createRequest(request.commands.DOWN);
             break;
           }
           case this.Characteristic.RemoteKey.ARROW_LEFT: {
-            request.createRequest("left");
+            request.createRequest(request.commands.LEFT);
             break;
           }
           case this.Characteristic.RemoteKey.ARROW_RIGHT: {
-            request.createRequest("right");
+            request.createRequest(request.commands.RIGHT);
             break;
           }
           case this.Characteristic.RemoteKey.SELECT: {
-            request.createRequest("ok");
+            request.createRequest(request.commands.OK);
             break;
           }
           case this.Characteristic.RemoteKey.BACK: {
-            request.createRequest("back");
+            request.createRequest(request.commands.BACK);
             break;
           }
           case this.Characteristic.RemoteKey.EXIT: {
-            request.createRequest("back");
+            request.createRequest(request.commands.BACK);
             break;
           }
           case this.Characteristic.RemoteKey.PLAY_PAUSE: {
-            request.createRequest("play");
+            request.createRequest(request.commands.PLAY);
             break;
           }
           case this.Characteristic.RemoteKey.INFORMATION: {
-            request.createRequest("info");
+            request.createRequest(request.commands.INFO);
             break;
           }
         }
@@ -125,11 +124,7 @@ class IPTV {
     // handle volume control
     speakerService.getCharacteristic(this.Characteristic.VolumeSelector)
       .on('set', (direction, callback) => {
-        if(direction === 0){
-            request.createRequest("volume_up");
-        }else{
-            request.createRequest("volume_down");
-        }
+        request.createRequest(direction === 0 ? request.commands.VOLUME_UP : request.commands.VOLUME_DOWN);
         callback(null);
       });
     this.api.publishExternalAccessories(PLUGIN_NAME, [this.iptvAccessory]);

@@ -1,6 +1,6 @@
 {
   "name": "homebridge-telekom-iptv",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Homebridge plugin to control the Set-top-box unit provided by Telekom",
   "main": "index.js",
   "scripts": {
