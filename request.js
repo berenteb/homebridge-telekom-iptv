@@ -55,14 +55,17 @@ function createRequest(command) {
 
   const req = http.request(options, function (res) {
     const chunks = [];
-    if(debug)console.log(res.statusCode);
+    if(res.statusCode != 204){
+      console.log("IPTV Communication error. Status code is "+res.statusCode+", should be 204.")
+    }
     res.on("data", function (chunk) {
       chunks.push(chunk);
     });
 
     res.on("end", function () {
       const body = Buffer.concat(chunks);
-      if(debug)console.log(body.toString());
+      if(body.toString()!==undefined)
+        console.log("Response from IPTV is not empty, indicates denial of control.")
     });
 
     res.on("error", function () {
