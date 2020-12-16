@@ -64,7 +64,7 @@ function createRequest(command) {
 
     res.on("end", function () {
       const body = Buffer.concat(chunks);
-      if(body.toString()!==undefined)
+      if(body.toString()!=="")
         console.log("Response from IPTV is not empty, indicates denial of control.")
     });
 
