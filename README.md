@@ -56,7 +56,7 @@ The Cisco Set-top-box can be controlled via the official Telekom app. This solut
 I'm sharing this because I find it interesting to have this in HomeKit. I'm not taking any responsibility for your device and network. Feel free to use if you're interested, but this is not official, production ready, stable etc. at all and is developed as a hobby project.
 
 # ISC License (ISC)
-Copyright 2020 Bálint Berente
+Copyright 2021 Bálint Berente
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
