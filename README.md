@@ -1,3 +1,4 @@
+![Version: see package.json](https://img.shields.io/github/package-json/v/berenteb/homebridge-telekom-iptv)
 # Telekom IPTV Remote for Homebridge
 **This is strongly unofficial, I would call it a Research.**
 The Cisco Set-top-box can be controlled via the official Telekom app. This solution brings it to HomeKit via Homebridge.
